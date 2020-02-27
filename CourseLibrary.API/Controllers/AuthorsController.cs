@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using AutoMapper;
 using CourseLibrary.API.Dto;
+using CourseLibrary.API.Entities;
 using CourseLibrary.API.ResourceParameters;
 using CourseLibrary.API.Services;
 using CourseLibrary.API.Utils.ExtantionMethods;
@@ -35,7 +36,7 @@ namespace CourseLibrary.API.Controllers
 
 
 
-        [HttpGet("{authorId}")]
+        [HttpGet("{authorId}", Name = "GetAuthor")]
         public IActionResult GetAuthors(Guid authorId)
         {
             var authorFromRepo = _courseLibraryRepository.GetAuthor(authorId);
@@ -44,5 +45,31 @@ namespace CourseLibrary.API.Controllers
 
             return Ok(_mapper.Map<AuthorDto>(authorFromRepo));
         }
-    }
+
+
+        [HttpPost]
+        public ActionResult<AuthorDto> CreateAuthor(AuthorForCreationDto author)
+        {
+            var authorEntity = _mapper.Map<Author>(author);
+
+            if (authorEntity == null) return StatusCode(500);
+
+            _courseLibraryRepository.AddAuthor(authorEntity);
+            _courseLibraryRepository.Save();
+
+
+            var authorToReturn = _mapper.Map<AuthorDto>(authorEntity);
+
+            return CreatedAtRoute("GetAuthor", new{authorId = authorToReturn.Id}, authorToReturn);
+        }
+
+
+        [HttpOptions]
+        public IActionResult GetAuthorsOptions()
+        {
+            Response.Headers.Add("Allow", "GET,OPTIONS,POST");
+            return Ok();
+        }
+     }
 }
+    
