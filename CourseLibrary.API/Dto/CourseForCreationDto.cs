@@ -1,18 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace CourseLibrary.API.Dto
+﻿namespace CourseLibrary.API.Dto
 {
-    public class CourseForCreationDto
-    { 
-        public string Title { get; set; }
-
- 
-        public string Description { get; set; }
-
-  
-       // public Guid AuthorId { get; set; }
+    public class CourseForCreationDto : CourseForManipulationDto
+    {
+      
     }
 }
