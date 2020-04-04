@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using CourseLibrary.API.ResourceParameters;
+using CourseLibrary.API.Utils;
 
 namespace CourseLibrary.API.Services
 {
@@ -15,7 +16,7 @@ namespace CourseLibrary.API.Services
         IEnumerable<Author> GetAuthors();
         Author GetAuthor(Guid authorId);
         IEnumerable<Author> GetAuthors(IEnumerable<Guid> authorIds);
-        IEnumerable<Author> GetAuthors(AuthorsResourceParameters authorsResourceParameters);
+        PagedList<Author> GetAuthors(AuthorsResourceParameters authorsResourceParameters);
         void AddAuthor(Author author);
         void DeleteAuthor(Author author);
         void UpdateAuthor(Author author);
